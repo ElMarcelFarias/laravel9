@@ -32,13 +32,12 @@ services:
     # db mysql
     mysql:
         platform: linux/amd64
-        image: mysql:5.7.22
+        image: mysql:8.0
         restart: unless-stopped
         environment:
             MYSQL_DATABASE: ${DB_DATABASE}
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_PASSWORD: ${DB_PASSWORD}
-            MYSQL_USER: ${DB_USERNAME}
         volumes:
             - ./.docker/mysql/dbdata:/var/lib/mysql
         ports:
