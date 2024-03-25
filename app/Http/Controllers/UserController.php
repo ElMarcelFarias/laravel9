@@ -8,9 +8,22 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
 
-        $users = User::get(); //lista de todos os usuários
+
+        //$users = User::where('name', 'LIKE', "%{$request->search}%")->get();
+        $search = $request->search;
+        $users = User::where(function ($query) use ($search){
+            if($search) {
+                $query->where('email', $search);
+                $query->orWhere('name', 'LIKE', "%{$search}%"); 
+            }
+            
+        })->get();
+
+
+
+        //$users = User::get(); //lista de todos os usuários
         
 
         // return view('users.index', [
