@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdateFormRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -32,4 +33,33 @@ class UserController extends Controller
         
         return view('users.show', compact('user'));
     }
+
+    public function create() {
+        return view('users.create');
+    }
+
+    public function store(StoreUpdateFormRequest $request) {
+        //$request->all();
+        // $request->only([
+        //     'name', 'email', 'password'
+        // ]);
+
+        //controller tem que ser simples, n pode ter lógica
+
+
+        $data = $request->all();
+        $data['password'] = bcrypt($request->password);
+
+        $user = User::create($data);
+
+        return redirect()->route('users.index');
+        //return redirect()->route('users.show', $user->id);
+
+        // $user = new User;
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password = $request->password;
+        // $user->save();
+    }
+
 }
