@@ -27,18 +27,33 @@ class StoreUpdateFormRequest extends FormRequest
 
         //validações
 
-        return [
+        //como pegar o id para fazer a validação 
+        //dd($this->segment(2)); //segment(2) ele pega os parametros da url por um index ou $this->id
+
+        $id = $this->id ?? '';
+
+        $rules = [
             'name' => 'required|string|max:255|min: 3',
             'email' => [
                 'required',
                 'email',
-                'unique:users', //email unico na tabela users
+                "unique:users,email,{$id},id",
             ],
             'password' => [
                 'required', 
                 'min:6',
                 'max:15'
             ]
-        ];
+        ];  
+
+        if($this->method('PUT')) {
+            $rules['password'] = [
+                'nullable', 
+                'min:6',
+                'max:15'
+            ];
+        }
+
+        return $rules;
     }
 }
