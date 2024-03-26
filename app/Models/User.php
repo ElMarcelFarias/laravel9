@@ -55,4 +55,9 @@ class User extends Authenticatable
         return $users;
 
     }
+
+    //relacionamento entre tabelas 1 - to - many, um usuário para vários comentários
+    public function comments() {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
 }
