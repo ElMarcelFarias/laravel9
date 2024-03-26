@@ -8,22 +8,23 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    protected $model;
+
+    public function __construct(User $user){
+        $this->model = $user;
+    }
+
     public function index(Request $request) {
 
 
-        //$users = User::where('name', 'LIKE', "%{$request->search}%")->get();
+        //$users = $this->model->where('name', 'LIKE', "%{$request->search}%")->get();
         $search = $request->search;
-        $users = User::where(function ($query) use ($search){
-            if($search) {
-                $query->where('email', $search);
-                $query->orWhere('name', 'LIKE', "%{$search}%"); 
-            }
-            
-        })->get();
+        $users = $this->model->getUsers(search: $request->search ?? '');
 
 
 
-        //$users = User::get(); //lista de todos os usuários
+        //$users = $this->model->get(); //lista de todos os usuários
         
 
         // return view('users.index', [
@@ -37,10 +38,10 @@ class UserController extends Controller
 
         //recuperar o usuário pelo id
         //Primeira forma
-        //$user = User::where('id', $id)->first(); //->get() me retorna uma collection, ou seja um array. 
+        //$user = $this->model->where('id', $id)->first(); //->get() me retorna uma collection, ou seja um array. 
                                                 //Eu necessito que me retorne um objeto daquele usuário, nao um array, entao utilizamos o first()
 
-        if(!$user = User::find($id)) {
+        if(!$user = $this->model->find($id)) {
             return redirect()->route('users.index');
         }
         
@@ -63,7 +64,7 @@ class UserController extends Controller
         $data = $request->all();
         $data['password'] = bcrypt($request->password);
 
-        $user = User::create($data);
+        $user = $this->model->create($data);
 
         return redirect()->route('users.index');
         //return redirect()->route('users.show', $user->id);
@@ -76,7 +77,7 @@ class UserController extends Controller
     }
 
     public function edit($id) {
-        if(!$user = User::find($id)) {
+        if(!$user = $this->model->find($id)) {
             return redirect()->route('users.index');
         }
 
@@ -85,7 +86,7 @@ class UserController extends Controller
 
 
     public function update(StoreUpdateFormRequest $request, $id) {
-        if(!$user = User::find($id)) {
+        if(!$user = $this->model->find($id)) {
             return redirect()->route('users.index');
         }
         //$data = $request->all();
@@ -110,7 +111,7 @@ class UserController extends Controller
     }
 
     public function destroy($id) {
-        if(!$user = User::find($id)) {
+        if(!$user = $this->model->find($id)) {
             return redirect()->route('users.index');
         }
 
