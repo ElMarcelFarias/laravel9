@@ -16,6 +16,7 @@
             {{$user->name}} - 
             {{$user->email}} 
             | <a href="{{ route('users.show', ['id' => $user->id]) }}">Detalhes</a>
+            | <a href="{{ route('comments.index', ['id' => $user->id]) }}">Comentários</a>
             | <a href="{{ route('users.edit', ['id' => $user->id]) }}">Editar</a>
         </li>
     @endforeach
