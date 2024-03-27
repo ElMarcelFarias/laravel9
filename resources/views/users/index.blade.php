@@ -18,8 +18,16 @@
             | <a href="{{ route('users.show', ['id' => $user->id]) }}">Detalhes</a>
             | <a href="{{ route('comments.index', ['id' => $user->id]) }}">Comentários</a>
             | <a href="{{ route('users.edit', ['id' => $user->id]) }}">Editar</a>
+            | <a href="{{ route('comments.index', $user->id) }}">Anotações ({{ $user->comments->count() }})</a>
         </li>
     @endforeach
+
+    <!-- Paginação com laravel -->
+    <div class="py-4">
+        {{ $users->appends([
+            'search' => request()->get('search', '')    
+        ])->links(); }}
+    </div>
 </ul>
 
 @endsection
