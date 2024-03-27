@@ -15,7 +15,7 @@
         <li>
             {{ $comment->body }} - 
             {{ $comment->visible ? 'SIM' : 'NÃO'}} 
-            | <a href="{{ route('users.edit', ['id' => $user->id]) }}">Editar</a>
+            | <a href="{{ route('comments.edit', ['id' => $user->id, 'id_comments' => $comment->id]) }}">Editar</a>
         </li>
     @endforeach
 </ul>

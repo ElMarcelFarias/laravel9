@@ -6,10 +6,13 @@ use App\Http\Controllers\{
 use App\Http\Controllers\Admin\CommentController;
 use Illuminate\Support\Facades\Route;
 
+
+
 Route::post('/users/{id}/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::get('/users/{id}/comments/create', [CommentController::class, 'create'])->name('comments.create');
 Route::get('/users/{id}/comments', [CommentController::class, 'index'])->name('comments.index');
-
+Route::get('/users/{id}/comments/{id_comments}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+Route::put('comments/{id}', [CommentController::class, 'update'])->name('comments.update');
 
 //editar parcialmente um registro patch, editar todo o registro put
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
