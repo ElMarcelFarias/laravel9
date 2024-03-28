@@ -13,8 +13,15 @@
 <ul>
     @foreach($users as $user)
         <li>
-            {{$user->name}} - 
-            {{$user->email}} 
+            <td>
+                @if ($user->image)
+                    <img src="{{ url("storage/{$user->image}") }}" alt="$user->name" class="object-cover w-80">
+                @else
+                    <img src="{{ url("images/favicon.ico}") }}" alt="{{ $user->name }}">
+                @endif
+            </td> 
+            <td>{{$user->name}} -</td> 
+            <td>{{$user->email}}</td> 
             | <a href="{{ route('users.show', ['id' => $user->id]) }}">Detalhes</a>
             | <a href="{{ route('comments.index', ['id' => $user->id]) }}">Comentários</a>
             | <a href="{{ route('users.edit', ['id' => $user->id]) }}">Editar</a>

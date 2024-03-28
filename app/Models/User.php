@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image',
     ];
 
     /**
@@ -51,7 +52,7 @@ class User extends Authenticatable
             }
             
         })->with(['comments'])
-         ->paginate(1);
+         ->paginate(); //padrao 15 registros
 
         //para utilizar paginação na tabela de usuários
         //utilizamos paginate() e o parametro de quantos registros
